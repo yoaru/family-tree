@@ -1,0 +1,41 @@
+                                                                                                                                                                 <!DOCTYPE html>
+<html lang="ko>
+<head>
+    <meta chrset="utf-8">
+    <title>내 가계도</title>
+<!-- css 연동 부분 -->
+<style>
+    /* 스타일 시트 작성 */
+    body {
+      -color: #65FE6F;
+    }
+</style>
+</head>
+
+<body>
+
+   <form action="/signup" method="post">
+        <label for="name">이름:</label>
+        <p>이름 : <input type="text" placeholder="이름을 입력하세요" name="InputUserName"/></p>
+
+        <label for="InputPhoneNumber">전화번호:</label>
+        <p>전화번호 : <input type="tel" name="InputPhoneNumber" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000"  maxlength="13" required></p>
+
+        <label for="password">비밀번호:</label>
+        <p>비밀번호 : <input type="password" placeholder="비밀번호를 입력하세요" name="InputPassword"/></p>
+
+        <label for="passwordConfirm">비밀번호 확인:</label>
+        <p>비밀번호 확인 : <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="InputPasswordConfirm"/></p>
+        <p><input type="submit" value="회원가입"></p>
+    </form>
+
+
+        <!-- Http Method : get, post -->
+        <!-- get : url에 데이터를 포함시킴, 브자우져 캐시를 지원하여 불필요한 네트워크 소모를 줄일수 있음 -->
+        <!-- post : url에 데이터를 포함시키지 않고 데이터를 request body에 포함시켜 요청 데이터를 노출시키지 않음, 브자우져 캐시를 지원하지 않음 -->
+
+        <!-- get : 데이터 검색 및 조회(Read) 작업을 처리하는데 주로 사용함 -->
+        <!-- post : 데이터 입력, 업데이트 작업을 하는데 주로 사용함 -->
+
+</body>
+</html>

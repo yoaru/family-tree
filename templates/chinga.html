@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html> <!--lang="en"-->
+<head>
+<!--
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-->
+    <title>Chinga Data</title>
+</head>
+<body>
+    <h1>친가</h1>
+    <table> <!--테이블 형태로 출력 -->
+        <thead> <!-- 컬럼 명 정의-->
+            <tr>
+
+                <th>name</th>
+                <th>birth</th>
+                <th>contact</th>
+                <th>dad</th>
+                <th>mom</th>
+                <th>ranking</th>
+                <th>from</th>
+                <th>gender</th>
+
+            </tr>
+        </thead>
+        <tbody> <!--컬럼에 들어갈 데이터 정의 -->
+            {% for row in chn_result %} <!--데이터 순회 루프 시작-->
+            <tr>
+
+                <td>{{ row.name }}</td>
+                <td>{{ row.birth}}</td>
+                <td>{{ row.contact }}</td>
+                <td>{{ row.dad }}</td>
+                <td>{{ row.mom }}</td>
+                <td>{{ row.ranking }}</td>
+                <td>{{ row.from }}</td>
+                <td>{{ row.gender }}</td>
+
+            </tr>
+            {% endfor %}<!--데이터 순회 루프 종료-->
+       </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+
