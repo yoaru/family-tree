@@ -1,8 +1,9 @@
-                                                                                                                                                                 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko>
 <head>
-    <meta chrset="utf-8">
-    <title>내 가계도</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
 <!-- css 연동 부분 -->
 <style>
     /* 스타일 시트 작성 */
@@ -15,17 +16,10 @@
 <body>
 
    <form action="/signup" method="post">
-        <label for="name">이름:</label>
-        <p>이름 : <input type="text" placeholder="이름을 입력하세요" name="InputUserName"/></p>
-
-        <label for="InputPhoneNumber">전화번호:</label>
-        <p>전화번호 : <input type="tel" name="InputPhoneNumber" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000"  maxlength="13" required></p>
-
-        <label for="password">비밀번호:</label>
-        <p>비밀번호 : <input type="password" placeholder="비밀번호를 입력하세요" name="InputPassword"/></p>
-
-        <label for="passwordConfirm">비밀번호 확인:</label>
-        <p>비밀번호 확인 : <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="InputPasswordConfirm"/></p>
+        <p>이름 : <input type="text" placeholder="이름을 입력하세요" name="UserName"/></p>
+        <p>비밀번호 : <input type="Password" placeholder="비밀번호를 입력하세요" name="Password"/></p>
+        <p>비밀번호 확인 : <input type="Password" placeholder="비밀번호를 다시 한번 입력하세요" name="PasswordConfirm"/></p>
+        <p>전화번호 : <input type="tel" name="PhoneNumber" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000"  maxlength="13" required></p>
         <p><input type="submit" value="회원가입"></p>
     </form>
 

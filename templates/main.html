@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>내 가계도</title>
+</head>
+<body>
+
+<h1>내 가계도</h1>
+
+<p><h2><a href="chinga.html">친가</a>
+<a href="wega.html">외가</a>
+<a href="chuga.html">처가</a>
+<a href="chuwega.html">처외가</a></h2> </p>
+
+
+
+<form action="/submit" method="POST">
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="이름" required><br>
+
+    <label for="birth">생년월일:</label>
+    <input type="date" id="birth" name="생년월일" required><br>
+
+    <label for="gender">성별:</label>
+    <input type="radio" id="male" name="성별" value="남자" required>
+    <label for="male">남자</label>
+    <input type="radio" id="female" name="성별" value="여자" required>
+    <label for="female">여자</label><br>
+
+    <label for="contact">연락처:</label>
+    <input type="tel" id="contact" name="연락처" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" requi>
+
+    <label for="dad">부:</label>
+    <input type="text" id="dad" name="부" required><br>
+
+    <label for="mom">모:</label>
+    <input type="text" id="mom" name="모" required><br>
+
+
+<label for="bro">형제: </label>
+ <select name="bro" id="bro">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+   </select>
+       <label for="sis">남</label>
+      <select name="sis" id="sis">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+<label for="rank">녀 중</label>
+      <select name="rank" id="rank">
+        <option value="첫째">첫째</option>
+        <option value="둘째">둘째</option>
+        <option value="셋째">셋째</option>
+        <option value="넷째">넷째</option>
+        <option value="다섯째">다석째</option>
+</select>
+<br>
+  <input type="radio" id="familyType1" name="from" value="친가">
+  <label for="vehicle1"> 친가</label>
+
+  <input type="radio" id="familyType2" name="from" value="외가">
+  <label for="vehicle2"> 외가</label>
+
+  <input type="radio" id="familyType3" name="from" value="처가">
+  <label for="vehicle3"> 처가</label>
+
+  <input type="radio" id="familyType4" name="from" value="처외가">
+  <label for="vehicle1"> 처외가</label><br>
+  <br><br>
+    <button type="submit">입력</button>
+</form>
+
+</body>
+</html>
