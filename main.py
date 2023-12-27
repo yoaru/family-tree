@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
-import pymysql 
+from datetime import timedelta
 import json
 
 #전역번수 선언
@@ -8,110 +8,87 @@ import json
 cur=None
 sql=""
 '''
-
-app = Flask(__name__)#마리아 db로 데이터베이스 변경 
-#conn = pymysql.connect(host='localhost',user='root',passwd='sql*2320',db='family',charset='utf8')
+                                                                    
+app = Flask(__name__)
+#데이터베이스 설정
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'gagye'
-app.config['MYSQL_PASSWORD'] = 'sql*2320'
+app.config['MYSQL_USER'] = 'uz'
+app.config['MYSQL_PASSWORD'] = 'qlalf'
 app.config['MYSQL_DB'] = 'family'
-
+#세션 변수 설정 
+app.config['SECRET_KEY'] = '2893589345891894859485693748832958475938758498234'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30) 
 mysql = MySQL(app)
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/home', methods=['GET','POST'])
 def home():
     return render_template('home.html')
 
 @app.route('/signup_page', methods=['GET','POST'])
 def signup_page():
     return render_template('signup.html')
-
-
-# @app.route('/login', methods=['POST'])
-# def login():
-#   if request.method=='POST':
-#     UserName = request.form['InputUserName']     # home.html의 form에서 넘겨받은 username ---> name : InputEmail
-#     Password = request.form['InputPassword']  # home.html의 form에서 넘겨받은 password ---> name : InputPassword
-
-#     cursor = mysql.connection.cursor()
-#     sql = 'select * from user where name=%s and password=%s'
-#     val = (InputUserName, InputPassword)
-#     cursor.execute(sql, val)
-#     result = cursor.fetchall()  # mysql에서 실행한 결과의 모든 행을 받아온다
-#     cursor.close()
-
-#     if len(result) > 1 :
-#        return '회원 정보에 중복된 값이 있습니다, 관리자에게 문의하세요'
-
-#     if len(result)==1:
-#        return rd('gagye.html')
-
-#     else:
-#        return '<p>이름이나 비밀번호가 일치하지 않습니다</p>'
-
-
-
-    # 로그인 정보를 session 변수에 저장한다.
-    # session : 클라이언트와 서버 간에 상태를 유지하기 위한 메커니즘
-
-    session[id] = result[0][0]
-    session[name] = result[0][1]
-    session[password] = result[0][2]
-
-    # session 정보를 저장하고 입력 폼으로 감
-    return rd('gagye.html')
-
-    # return request.form['InputEmail'] + request.form['InputPassword']
+    
 
 @app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['UserName']
-        password = request.form['Password']
-        password = request.form['PhoneNumber']
+        userName = request.form['UserName']
+        passwd = request.form['Password']
+        passwdConf = request.form['PasswordConfirm']
+        PasswordConfirm = request.form['PhoneNumber']
 
 
-        # 사용자 추가 쿼리
-        add_user_query = "INSERT INTO users (username, password) VALUES (%s, %s)"
-        cursor = mysql.connection.cursor()
-        #cur = conn.cursor()
-        cursor.execute(add_user_query, (username, password))
-        mysql.connection.commit()
-        #conn.commit()
-        #cursor.close()
-        message = '회원가입이 성공적으로 완료되었습니다.'
-        #return render_template('home.html', message=message) #주로 데이터 출력할 때 사용
-        return redirect(url_for('/', message=message)) #주로 어떤 결과를 입력받고 결과를 보여주는 데 사용 
+        # # 사용자 추가 쿼리
+        # add_user_query = "INSERT INTO users (username, password) VALUES (%s, %s,%s)"
+        # cursor = mysql.connection.cursor()
+        # cursor.execute(add_user_query, (username, password))
+        # mysql.connection.commit()
+        # cursor.close()
+        # message = '회원가입이 성공적으로 완료되었습니다.'
+        # #return render_template('home.html', message=message) #주로 데이터 출력할 때 사용
+        # return redirect(url_for('/', message=message)) #주로 어떤 결과를 입력받고 결과를 보여주는 데 사용 
+    
+def insert_user(userName, passwd, passwdConf,phoneNumber):
+  if request.method == 'POST':
+    if userName=="" or passwd=="" or passwdConf=="" or phoneNumber=="":
+      error = '모든 항목을 입력해주세요'
+      return redirect(url_for(home, param1=error))  # signup form page로 redirect 시킴 (method를 post로 지정하지 않았기 때문에 GET 방식임)
 
-# @app.route('/signup', methods=['POST'])
-# def signup():
-#     return insert_user(request.form['InputUserName'],
-#                 request.form['InputPassword'],
-#                 request.form['InputPasswordConfirm'],
-#                 request.form['InputPhoneNumber'])
+  #입력한 비밀번호와 비밀번호 확인 필드가 서로 다르면...
+  if passwd!=passwdConf:
+    error = '비밀번호 입력을 확인해주세요'
+    return redirect(url_for(signup_page, param1=error))  # signup form page로 redirect 시킴 (method를 post로 지정하지 않았기 때문에 GET 방식임)
 
-# def insert_user(userName, passwd, passwdConf, phoneNumber):
-#   if userName=="" or passwd=="" or passwdConf=="" or phoneNumber=="":
-#     error = '모든 항목을 입력해주세요'
-#     return rd(url_for(SIGNUP, param1=error))  # signup form page로 redirect 시킴 (method를 post로 지정하지 않았기 때문에 GET 방식임)
+  #정상적인 입력이 확인되면  user 테이블에 위 항목들을 입력한다
+  sql = 'insert into user(name, password, phoneNumber) values(%s,%s,%s)'
+  values = (userName, passwd, phoneNumber) # 위 %s에 포맷팅될 각각의 값을 순서대로 튜플형태로 만든다
+  cur = mysql.connection.cursor() # 데이터베이스 핸들러 객체를 가져온다
+  cur.execute(sql, values)  # sql문을 변수들과 함께 실행한다
+  mysql.connection.commit() # insert문을 실행한뒤에는 반드시 commit을 해주어야 한다
+  cur.close()
+  return '회원가입해 주셔서 감사합니다 : <a href="/home">로그인 페이지로 돌아가 로그인을 해주세요.</a>'
 
-#   #입력한 비밀번호와 비밀번호 확인 필드가 서로 다르면...
-#   if passwd!=passwd_conf:
-#     error = '비밀번호 입력을 확인해주세요'
-#     return rd(url_for(SIGNUP, param1=error))  # signup form page로 redirect 시킴 (method를 post로 지정하지 않았기 때문에 GET 방식임)
+@app.route('/login', methods=['POST'])
+def login():
+  if request.method=='POST':
+    UserName = request.form['InputUserName']     # home.html의 form에서 넘겨받은 username ---> name : InputEmail
+    Password = request.form['InputPassword']  # home.html의 form에서 넘겨받은 password ---> name : InputPassword
 
-#   #정상적인 입력이 확인되면  user 테이블에 위 항목들을 입력한다
-#   sql = 'insert into user(name, password, phoneNumber) values(%s,%s,%s)'
-#   values = (name, passwd, number) # 위 %s에 포맷팅될 각각의 값을 순서대로 튜플형태로 만든다
-#   cur = mysql.connection.cursor() # 데이터베이스 핸들러 객체를 가져온다
-#   cur.execute(sql, values)  # sql문을 변수들과 함께 실행한다
-#   mysql.connection.commit() # insert문을 실행한뒤에는 반드시 commit을 해주어야 한다
-#   cur.close()
-#   return '회원가입해 주셔서 감사합니다 : <a href="/home">로그인 페이지로 돌아가 로그인을 해주세요.</a>'
+    cursor = mysql.connection.cursor()
+    sql = 'select * from user where name=%s and password=%s'
+    val = (UserName, Password)
+    cursor.execute(sql, val)
+    result = cursor.fetchall()  # mysql에서 실행한 결과의 모든 행을 받아온다
+    cursor.close()
 
+    if len(result) > 1 :
+       return '회원 정보에 중복된 값이 있습니다, 관리자에게 문의하세요'
 
+    if len(result)==1:
+       return redirect('main.html')
 
-
+    else:
+       return '<p>이름이나 비밀번호가 일치하지 않습니다</p>'
 
 
 

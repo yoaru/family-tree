@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="ko>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
+
 <!-- css 연동 부분 -->
-<style>
+<link rel="stylesheet" href="style.css">
+<!--<style>
     /* 스타일 시트 작성 */
     body {
+        style="text-align:center"
       -color: #65FE6F;
     }
 </style>
+-->
+
 </head>
 
 <body>
 
-   <form action="/signup" method="post">
+   <form action="/signup" method="post" >
         <p>이름 : <input type="text" placeholder="이름을 입력하세요" name="UserName"/></p>
         <p>비밀번호 : <input type="Password" placeholder="비밀번호를 입력하세요" name="Password"/></p>
         <p>비밀번호 확인 : <input type="Password" placeholder="비밀번호를 다시 한번 입력하세요" name="PasswordConfirm"/></p>
